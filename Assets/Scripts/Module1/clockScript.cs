@@ -13,7 +13,8 @@ public class clockScript : MonoBehaviour
     TextMeshPro digiFace;
 
     [SerializeField]
-    float TimeSpeed, clockHours, clockMinutes, clockSeconds, currentTime;
+    float TimeSpeed, clockHours, clockMinutes, clockSeconds, startTime;
+    float currentTime;
     
     bool timeCheck;
     float mtimer, stimer, timeLenght;
@@ -24,8 +25,8 @@ public class clockScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timeLenght = 43200;
-        currentTime = clockSeconds+(clockMinutes*60)+(clockHours*60*60);
+        timeLenght = 43200f;
+        startTime = clockSeconds+(clockMinutes*60f)+(clockHours*60f*60f);
         Debug.Log("Starting time: " + clockHours + ":" + clockMinutes + ":" + clockSeconds);
         secondHand.transform.Rotate(new Vector3(0,360/60*clockSeconds,0));
         minuteHand.transform.Rotate(new Vector3(0,360/60*(clockMinutes+(clockSeconds/60)),0));
@@ -35,8 +36,9 @@ public class clockScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentTime = (currentTime + TimeSpeed * Time.deltaTime) % (timeLenght*2);
-
+        Time.timeScale = TimeSpeed;
+        currentTime = (startTime + Time.time) % (timeLenght*2);
+        Debug.Log(Mathf.Floor(currentTime) +":"+Mathf.Floor(Time.time));
         if(clockSeconds<Mathf.Floor(currentTime % 60))
         {
             stimer = Time.time;
