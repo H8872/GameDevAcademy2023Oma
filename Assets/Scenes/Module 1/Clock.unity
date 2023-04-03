@@ -271,15 +271,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4bb9fb438c792418703a32e4ee3ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clockMode: 2
   secondHand: {fileID: 245509546}
   minuteHand: {fileID: 1250097359}
   hourHand: {fileID: 1050857219}
   digiFace: {fileID: 959719314}
   TimeSpeed: 1
-  clockHours: 0
-  clockMinutes: 0
-  clockSeconds: 35
-  currentTime: 0
+  clockHours: 15
+  clockMinutes: 7
+  clockSeconds: 46
+  startTime: 0
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.83420163
+      value: 0.010296098
+      inSlope: 7.679642
+      outSlope: 7.679642
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9271249
+      value: 1.4363843
+      inSlope: 0.39985323
+      outSlope: 0.39985323
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9585471
+      value: 0.9792782
+      inSlope: -7.023674
+      outSlope: -7.023674
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.34692627
+      outSlope: 0.34692627
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.7616456
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   pawn: {fileID: 1899961720}
   sun: {fileID: 705507994}
 --- !u!1 &73933138
@@ -626,7 +678,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 6
   m_Depth: -1
   m_CullingMask:
@@ -650,14 +702,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124338785}
-  m_LocalRotation: {x: 0.5419539, y: -0, z: -0, w: 0.84040815}
-  m_LocalPosition: {x: 0, y: 8.71, z: -4.16}
+  m_LocalRotation: {x: 0.5270311, y: 0.101313606, z: 0.067216955, w: 0.84110385}
+  m_LocalPosition: {x: -3.6, y: 9.5, z: -5.8}
   m_LocalScale: {x: 1, y: 0.99324167, z: 1.0068278}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 65.634, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60.804, y: 29.646, z: 26.79}
 --- !u!114 &124338789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3318,7 +3370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874456242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.08, z: -1.84}
+  m_LocalPosition: {x: 0, y: 0.062, z: -1.84}
   m_LocalScale: {x: 0.2805, y: 1, z: 0.18247}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4183,7 +4235,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.11}
+  m_AnchoredPosition: {x: 0, y: 0.022}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &959719314

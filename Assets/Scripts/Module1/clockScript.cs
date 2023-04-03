@@ -65,7 +65,6 @@ public class clockScript : MonoBehaviour
         else if(clockMode == Mode.Smooth)
         {
             float ts = Time.time -Mathf.Floor(Time.time);
-            Debug.Log(ts);
             secondHand.transform.localRotation = Quaternion.Euler(0,Mathf.Lerp(clockSeconds*6, clockSeconds*6+6,ts),0);
         }
         else
