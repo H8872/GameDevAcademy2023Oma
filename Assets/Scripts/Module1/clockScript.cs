@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class clockScript : MonoBehaviour
 {
     
     [SerializeField]
-    public GameObject secondHand, minuteHand, hourHand;
+    GameObject secondHand, minuteHand, hourHand;
+
+    [SerializeField]
+    TextMeshPro digiFace;
 
     [SerializeField]
     float TimeSpeed, clockHours, clockMinutes, clockSeconds, currentTime;
@@ -73,7 +77,9 @@ public class clockScript : MonoBehaviour
         //Debug.Log(currentTime);
 
         sun.intensity = 0.5f+(Mathf.Sin(((currentTime+(timeLenght/4f)) / timeLenght)*Mathf.PI)/2)*-1;
-        Debug.Log(sun.intensity);
+        //Debug.Log(sun.intensity);
+
+        digiFace.text = clockHours.ToString("00")+":"+clockMinutes.ToString("00")+"\n"+clockSeconds.ToString("00");
     }
 
     public void SpinPawn(float speed)
