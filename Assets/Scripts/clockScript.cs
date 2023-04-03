@@ -4,23 +4,15 @@ using UnityEngine;
 
 public class clockScript : MonoBehaviour
 {
-    public GameObject secondHand;
-    public GameObject minuteHand;
-    public GameObject hourHand;
-
-    public float TimeSpeed;
-
-    [SerializeField]
-    float clockHours;
-    [SerializeField]
-    float clockMinutes;
-    [SerializeField]
-    float clockSeconds;
     
-    float currentTime;
+    [SerializeField]
+    public GameObject secondHand, minuteHand, hourHand;
+
+    [SerializeField]
+    float TimeSpeed, clockHours, clockMinutes, clockSeconds, currentTime;
+    
     bool timeCheck;
-    float mtimer;
-    float stimer;
+    float mtimer, stimer, timeLenght;
 
     public GameObject pawn;
     public Light sun;
@@ -28,6 +20,7 @@ public class clockScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        timeLenght = 43200;
         currentTime = clockSeconds+(clockMinutes*60)+(clockHours*60*60);
         Debug.Log("Starting time: " + clockHours + ":" + clockMinutes + ":" + clockSeconds);
         secondHand.transform.Rotate(new Vector3(0,360/60*clockSeconds,0));
@@ -38,7 +31,7 @@ public class clockScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentTime = (currentTime + TimeSpeed * Time.deltaTime) % 43200;
+        currentTime = (currentTime + TimeSpeed * Time.deltaTime) % (timeLenght*2);
 
         if(clockSeconds<Mathf.Floor(currentTime % 60))
         {
@@ -57,7 +50,8 @@ public class clockScript : MonoBehaviour
         //Debug.Log(currentTime  + " = " + clockHours + ":" + clockMinutes + ":" + clockSeconds);
         //secondHand.transform.Rotate(new Vector3(0,360f/60f,0) * Time.deltaTime*TimeSpeed);
         //minuteHand.transform.Rotate(new Vector3(0,360/60,0) * Time.deltaTime/60*TimeSpeed);
-        hourHand.transform.Rotate(new Vector3(0,360f/60f,0) * Time.deltaTime/60f/12f*TimeSpeed);
+        //hourHand.transform.Rotate(new Vector3(0,360f/60f,0) * Time.deltaTime/60f/12f*TimeSpeed);
+
 
         if(clockSeconds == 0)
         {
@@ -75,13 +69,15 @@ public class clockScript : MonoBehaviour
             minuteHand.transform.localRotation = Quaternion.Euler(0,6*clockMinutes,0);
         }
 
-        sun.intensity = Mathf.Abs(Mathf.Sin(hourHand.transform.rotation.y));
+        hourHand.transform.localRotation = Quaternion.Euler(0,(currentTime % timeLenght)/timeLenght*360,0);
+        //Debug.Log(currentTime);
 
+        sun.intensity = 0.5f+(Mathf.Sin(((currentTime+(timeLenght/4f)) / timeLenght)*Mathf.PI)/2)*-1;
+        Debug.Log(sun.intensity);
     }
 
     public void SpinPawn(float speed)
     {
-        speed = speed / 43200;
-        pawn.GetComponent<Animator>().SetFloat("SpinSpeed", speed);
+        pawn.GetComponent<Animator>().SetFloat("SpinSpeed", speed / timeLenght);
     }
 }
