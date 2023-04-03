@@ -5,6 +5,10 @@ using TMPro;
 
 public class clockScript : MonoBehaviour
 {
+
+    public enum Mode{Instant, Smooth, CurveRealistic}
+
+    public Mode clockMode = Mode.CurveRealistic;
     
     [SerializeField]
     GameObject secondHand, minuteHand, hourHand;
@@ -15,6 +19,9 @@ public class clockScript : MonoBehaviour
     [SerializeField]
     float TimeSpeed, clockHours, clockMinutes, clockSeconds, startTime;
     float currentTime;
+
+    [SerializeField]
+    AnimationCurve curve;
     
     bool timeCheck;
     float mtimer, stimer, timeLenght;
@@ -38,21 +45,38 @@ public class clockScript : MonoBehaviour
     {
         Time.timeScale = TimeSpeed;
         currentTime = (startTime + Time.time) % (timeLenght*2);
-        Debug.Log(Mathf.Floor(currentTime) +":"+Mathf.Floor(Time.time));
-        if(clockSeconds<Mathf.Floor(currentTime % 60))
+        if(clockSeconds>Mathf.Floor(currentTime % 60))
         {
             stimer = Time.time;
             SpinPawn(currentTime);
         }
-        else
-        {
-            float ts = (Time.time - stimer) / 0.1f;
-            secondHand.transform.localRotation = Quaternion.Euler(0,Mathf.SmoothStep(6*clockSeconds-6,6*clockSeconds,ts),0);
-        }
-
         clockHours = Mathf.Floor(currentTime/60/60);
         clockMinutes = Mathf.Floor((currentTime-clockHours*60*60)/60);
         clockSeconds = Mathf.Floor(currentTime % 60);
+
+        if(clockMode == Mode.CurveRealistic)
+        {
+            secondHand.transform.localRotation = Quaternion.Euler(0,curve.Evaluate(currentTime % 1)*6+clockSeconds*6,0);
+        }
+        else if(clockMode == Mode.Instant)
+        {
+            secondHand.transform.localRotation = Quaternion.Euler(0,6*clockSeconds,0);
+        }
+        else if(clockMode == Mode.Smooth)
+        {
+            float ts = Time.time -Mathf.Floor(Time.time);
+            Debug.Log(ts);
+            secondHand.transform.localRotation = Quaternion.Euler(0,Mathf.Lerp(clockSeconds*6, clockSeconds*6+6,ts),0);
+        }
+        else
+        {
+            Debug.LogError("Clock Mode Impossible :)");
+        }
+
+        
+
+
+
         //Debug.Log(currentTime  + " = " + clockHours + ":" + clockMinutes + ":" + clockSeconds);
         //secondHand.transform.Rotate(new Vector3(0,360f/60f,0) * Time.deltaTime*TimeSpeed);
         //minuteHand.transform.Rotate(new Vector3(0,360/60,0) * Time.deltaTime/60*TimeSpeed);
@@ -67,6 +91,7 @@ public class clockScript : MonoBehaviour
                 timeCheck = true;
             }
             float t = (Time.time - mtimer) / 0.1f;
+            
             minuteHand.transform.localRotation = Quaternion.Euler(0,Mathf.SmoothStep(6*clockMinutes-6,6*clockMinutes,t),0);
         }
         else
